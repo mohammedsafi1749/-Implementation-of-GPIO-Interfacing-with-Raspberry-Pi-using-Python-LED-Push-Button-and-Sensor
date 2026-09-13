@@ -1,4 +1,4 @@
-# Experiment: Implementation of GPIO Interfacing with Raspberry Pi using Python – LED, Push Button, and Sensor
+# EXP : 9 Implementation of GPIO Interfacing with Raspberry Pi using Python – LED, Push Button, and Sensor
 
 ## 1. AIM
 
@@ -72,7 +72,8 @@ In this experiment:
                        GND
 ```
 
-<img width="1200" height="630" alt="1772130665569" src="https://github.com/user-attachments/assets/a7c38f56-e7d5-459e-8b07-e117ae760f29" />
+<img width="1600" height="701" alt="image" src="https://github.com/user-attachments/assets/05451ed9-db60-4f77-a673-b8a40b52d8b7" />
+
 
 ## 6. ALGORITHM
 
@@ -91,43 +92,20 @@ In this experiment:
 ## 7. PYTHON PROGRAM
 
 ```python
-import RPi.GPIO as GPIO
-import time
-
-# GPIO pin numbers
-LED = 17
-BUTTON = 27
-SENSOR = 22
-
-# GPIO setup
-GPIO.setmode(GPIO.BCM)
-
-GPIO.setup(LED, GPIO.OUT)
-GPIO.setup(BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-GPIO.setup(SENSOR, GPIO.IN)
-
-try:
-    while True:
-
-        button_state = GPIO.input(BUTTON)
-        sensor_state = GPIO.input(SENSOR)
-
-        # Turn ON LED when button is pressed
-        # or sensor detects an input
-        if button_state == GPIO.LOW or sensor_state == GPIO.HIGH:
-            GPIO.output(LED, GPIO.HIGH)
-            print("LED ON")
-        else:
-            GPIO.output(LED, GPIO.LOW)
-            print("LED OFF")
-
-        time.sleep(0.2)
-
-except KeyboardInterrupt:
-    print("Program stopped")
-
-finally:
-    GPIO.cleanup()
+from machine import Pin
+import utime
+bit0 = Pin(12, Pin.OUT)  
+bit1 = Pin(13, Pin.OUT)
+bit2 = Pin(14, Pin.OUT)
+counter = 0 
+print(counter)
+while True:
+    print(counter)
+    bit0.value(counter & 1)
+    bit1.value((counter >> 1) & 1)
+    bit2.value((counter >> 2) & 1)
+    counter = (counter + 1) % 256
+    utime.sleep(1)
 ```
 
 ### Important
